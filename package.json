@@ -1,0 +1,32 @@
+{
+  "name": "component-based-software",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:web": "turbo -F web dev",
+    "dev:server": "turbo -F server dev",
+    "db:push": "turbo -F @component-based-software/db db:push",
+    "db:studio": "turbo -F @component-based-software/db db:studio",
+    "db:generate": "turbo -F @component-based-software/db db:generate",
+    "db:migrate": "turbo -F @component-based-software/db db:migrate"
+  },
+  "dependencies": {
+    "@component-based-software/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@component-based-software/config": "workspace:*",
+    "@types/node": "catalog:",
+    "turbo": "^2.8.12",
+    "typescript": "catalog:"
+  },
+  "packageManager": "pnpm@10.13.1"
+}

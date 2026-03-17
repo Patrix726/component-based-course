@@ -1,0 +1,24 @@
+{
+  "name": "@component-based-software/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@component-based-software/db": "workspace:*",
+    "@component-based-software/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@component-based-software/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
