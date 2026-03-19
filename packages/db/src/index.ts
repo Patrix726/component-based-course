@@ -1,9 +1,17 @@
-import { env } from "@component-based-software/env/server";
 import { PrismaPg } from "@prisma/adapter-pg";
-
 import { PrismaClient } from "../prisma/generated/client";
+import { createUserRepository } from "./repositories/user";
 
-const adapter = new PrismaPg({ connectionString: env.DATABASE_URL });
-const prisma = new PrismaClient({ adapter });
+export const createDb = ({
+	connectionString,
+}: {
+	connectionString: string;
+}) => {
+	const adapter = new PrismaPg({ connectionString });
+	const prisma = new PrismaClient({ adapter });
 
-export default prisma;
+	return {
+		prisma,
+		repositories: { user: createUserRepository(prisma) },
+	};
+};
