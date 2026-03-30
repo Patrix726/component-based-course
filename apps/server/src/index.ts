@@ -8,7 +8,11 @@ import { logger } from "hono/logger";
 
 const { prisma } = createDb({ connectionString: env.DATABASE_URL });
 const auth = createAuth({
-	prisma,
+	adapterOpts: {
+		type: "prisma",
+		client: prisma,
+		options: { provider: "postgresql" },
+	},
 	config: {
 		BETTER_AUTH_SECRET: env.BETTER_AUTH_SECRET,
 		BETTER_AUTH_URL: env.BETTER_AUTH_URL,

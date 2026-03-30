@@ -1,23 +1,24 @@
 import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
+import createAdapterFactory from "./adapters";
 
 type AuthConfig = {
 	CORS_ORIGIN: string;
 	BETTER_AUTH_SECRET: string;
 	BETTER_AUTH_URL: string;
 };
+
+// create better auth instance based on any database layer
 export const createAuth = ({
-	prisma,
-	config: config,
+	adapterOpts,
+	config,
 }: {
-	prisma: any;
+	adapterOpts: { type: string; client: any; options?: any };
 	config: AuthConfig;
 }) => {
-	const auth = betterAuth({
-		database: prismaAdapter(prisma, {
-			provider: "postgresql",
-		}),
+	const database = createAdapterFactory(adapterOpts);
 
+	const auth = betterAuth({
+		database,
 		trustedOrigins: [config.CORS_ORIGIN],
 		emailAndPassword: {
 			enabled: true,
