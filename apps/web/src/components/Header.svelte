@@ -1,5 +1,5 @@
 <script lang="ts">
-
+	import { Link } from "@component-based-software/ui"
 	import UserMenu from './UserMenu.svelte';
     const links = [
         { to: "/", label: "Home" },
@@ -12,12 +12,9 @@
 	<div class="flex flex-row items-center justify-between px-4 py-2 md:px-6">
 		<nav class="flex gap-4 text-lg">
 			{#each links as link (link.to)}
-				<a
-					href={link.to}
-					class="hover:text-neutral-400 transition-colors"
-				>
+				<Link href={link.to}>
 					{link.label}
-				</a>
+				</Link>
 			{/each}
 		</nav>
 		<div class="flex items-center gap-2">

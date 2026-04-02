@@ -14,6 +14,7 @@
   "dependencies": {
     "@component-based-software/auth": "workspace:*",
     "@component-based-software/env": "workspace:*",
+    "@component-based-software/ui": "workspace:*",
     "@prisma/client": "catalog:",
     "@tanstack/svelte-form": "^1.28.0",
     "better-auth": "catalog:",

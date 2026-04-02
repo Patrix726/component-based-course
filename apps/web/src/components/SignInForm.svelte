@@ -3,6 +3,7 @@
 	import { z } from 'zod';
 	import { authClient } from '$lib/auth-client';
 	import { goto } from '$app/navigation';
+	import { Button, Input } from '@component-based-software/ui';
 
 	let { switchToSignUp } = $props<{ switchToSignUp: () => void }>();
 
@@ -46,17 +47,12 @@
 			{#snippet children(field)}
 				<div class="space-y-1">
 					<label for={field.name}>Email</label>
-					<input
-						id={field.name}
-						name={field.name}
+					<Input
 						type="email"
-						class="w-full border"
+						placeholder="Enter your email"
+						bind:value={field.state.value}
 						onblur={field.handleBlur}
-						value={field.state.value}
-						oninput={(e: Event) => {
-							const target = e.target as HTMLInputElement;
-							field.handleChange(target.value);
-						}}
+						required
 					/>
 					{#if field.state.meta.isTouched}
 						{#each field.state.meta.errors as error}
@@ -71,17 +67,12 @@
 			{#snippet children(field)}
 				<div class="space-y-1">
 					<label for={field.name}>Password</label>
-					<input
-						id={field.name}
-						name={field.name}
+					<Input
 						type="password"
-						class="w-full border"
+						placeholder="Enter your password"
+						bind:value={field.state.value}
 						onblur={field.handleBlur}
-						value={field.state.value}
-						oninput={(e: Event) => {
-							const target = e.target as HTMLInputElement;
-							field.handleChange(target.value);
-						}}
+						required
 					/>
 					{#if field.state.meta.isTouched}
 						{#each field.state.meta.errors as error}
@@ -94,16 +85,16 @@
 
 		<form.Subscribe selector={(state) => ({ canSubmit: state.canSubmit, isSubmitting: state.isSubmitting })}>
 			{#snippet children(state)}
-				<button type="submit" class="w-full" disabled={!state.canSubmit || state.isSubmitting}>
+				<Button type="submit" disabled={!state.canSubmit || state.isSubmitting}>
 					{state.isSubmitting ? 'Submitting...' : 'Sign In'}
-				</button>
+				</Button>
 			{/snippet}
 		</form.Subscribe>
 	</form>
 
 	<div class="mt-4 text-center">
-		<button type="button" class="text-indigo-600 hover:text-indigo-800" onclick={switchToSignUp}>
+		<Button variant="outline" on:click={switchToSignUp}>
 			Need an account? Sign Up
-		</button>
+		</Button>
 	</div>
 </div>

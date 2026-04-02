@@ -1,0 +1,29 @@
+{
+	"name": "@component-based-software/ui",
+	"version": "0.0.1",
+	"description": "Reusable UI components for Svelte",
+	"main": "src/lib/index.js",
+	"type": "module",
+	"exports": {
+		".": "./src/lib/index.js"
+	},
+	"scripts": {
+		"build": "svelte-package",
+		"check": "svelte-check --tsconfig ./tsconfig.json",
+		"lint": "eslint ."
+	},
+	"devDependencies": {
+		"@sveltejs/package": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^6.0.0",
+		"svelte": "^5.0.0",
+		"typescript": "catalog:",
+		"@typescript-eslint/eslint-plugin": "^6.0.0",
+		"@typescript-eslint/parser": "^6.0.0",
+		"eslint": "^8.0.0",
+		"eslint-plugin-svelte": "^2.0.0"
+	},
+	"peerDependencies": {
+		"svelte": "^4.0.0"
+	}
+}
+

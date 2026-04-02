@@ -3,6 +3,7 @@
 	import { z } from 'zod';
 	import { authClient } from '$lib/auth-client';
 	import { goto } from '$app/navigation';
+	import {Button} from "@component-based-software/ui"
 
 	let { switchToSignIn } = $props<{ switchToSignIn: () => void }>();
 
@@ -127,16 +128,16 @@
 
 		<form.Subscribe selector={(state) => ({ canSubmit: state.canSubmit, isSubmitting: state.isSubmitting })}>
 			{#snippet children(state)}
-				<button type="submit" class="w-full" disabled={!state.canSubmit || state.isSubmitting}>
+				<Button type="submit" disabled={!state.canSubmit || state.isSubmitting}>
 					{state.isSubmitting ? 'Submitting...' : 'Sign Up'}
-				</button>
+				</Button>
 			{/snippet}
 		</form.Subscribe>
 	</form>
 
 	<div class="mt-4 text-center">
-		<button type="button" class="text-indigo-600 hover:text-indigo-800" onclick={switchToSignIn}>
+		<Button on:click={switchToSignIn}>
 			Already have an account? Sign In
-		</button>
+		</Button>
 	</div>
 </div>
