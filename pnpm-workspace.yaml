@@ -8,3 +8,5 @@ catalog:
   "@types/node": ^22.13.14
   better-auth: 1.5.2
   "@prisma/client": ^7.2.0
+  convex: ^1.32.0
+  svelte: ^5.38.1

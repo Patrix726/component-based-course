@@ -5,6 +5,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import realtimeRouter from "./realtime-routes";
 
 const { prisma } = createDb({ connectionString: env.DATABASE_URL });
 const auth = createAuth({
@@ -38,6 +39,9 @@ app.on(["POST", "GET"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 app.get("/", (c) => {
 	return c.text("OK");
 });
+
+// realtime routes
+app.route("/", realtimeRouter);
 
 serve(
 	{

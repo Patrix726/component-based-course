@@ -1,0 +1,26 @@
+{
+	"name": "@component-based-software/realtime",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"main": "src/index.ts",
+	"exports": {
+		".": "./src/index.ts",
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"scripts": {
+		"dev": "convex dev",
+		"deploy": "convex deploy",
+		"check": "tsc -p tsconfig.json --noEmit",
+		"lint": ""
+	},
+	"dependencies": {
+		"convex": "catalog:"
+	},
+	"devDependencies": {
+		"@component-based-software/config": "workspace:*",
+		"typescript": "catalog:"
+	}
+}
