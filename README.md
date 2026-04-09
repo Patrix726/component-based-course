@@ -1,6 +1,21 @@
-# component-based-software
+# Club-Chess 2.0
 
 This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines SvelteKit, Hono, and more.
+
+## Product Direction
+
+We are pivoting this repository into a chess club SaaS focused on admin-led tournament management.
+The goal is to implement strong component-based engineering practices while delivering a maintainable product.
+
+High-level scope:
+
+- Admins create and manage tournaments, rounds, and matches
+- Fixed white/black assignments for every match
+- QR-based clock sessions to sync player devices
+- Admin-only result entry (win/loss/draw)
+- Tournament standings and leaderboards
+
+See `docs/product-scope.md` and `docs/domain-map.md` for details.
 
 ## Features
 
