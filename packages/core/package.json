@@ -1,0 +1,24 @@
+{
+	"name": "@component-based-software/core",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": {
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"scripts": {
+		"check-types": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@component-based-software/types": "workspace:*"
+	},
+	"devDependencies": {
+		"@component-based-software/config": "workspace:*",
+		"typescript": "catalog:"
+	}
+}
