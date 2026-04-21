@@ -1,13 +1,17 @@
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id                   String       @id
+  name                 String
+  email                String
+  emailVerified        Boolean      @default(false)
+  image                String?
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  sessions             Session[]
+  accounts             Account[]
+  memberships          Membership[]
+  createdTournaments   Tournament[] @relation("TournamentCreatedByUser")
+  assignedResults      Result[]     @relation("ResultAssignedByUser")
+  playerProfiles       Player[]     @relation("PlayerUser")
 
   @@unique([email])
   @@map("user")

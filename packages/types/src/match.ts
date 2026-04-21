@@ -1,6 +1,9 @@
 import { z } from "zod";
-import { entityIdSchema, isoDateTimeSchema, paginatedSchema } from "./primitives";
-import { timeControlSchema } from "./tournament";
+import {
+	entityIdSchema,
+	isoDateTimeSchema,
+	paginatedSchema,
+} from "./primitives";
 
 export const pieceColorSchema = z.enum(["WHITE", "BLACK"]);
 export const matchStatusSchema = z.enum([
@@ -20,7 +23,8 @@ export const createMatchRequestSchema = z.object({
 	boardNumber: z.number().int().min(1),
 	whitePlayerId: entityIdSchema,
 	blackPlayerId: entityIdSchema,
-	timeControl: timeControlSchema,
+	initialSeconds: z.number().int().min(60),
+	incrementSeconds: z.number().int().min(0).max(120),
 });
 
 export const matchClockDtoSchema = z.object({
@@ -49,7 +53,8 @@ export const matchDtoSchema = z.object({
 	whitePlayerId: entityIdSchema,
 	blackPlayerId: entityIdSchema,
 	status: matchStatusSchema,
-	timeControl: timeControlSchema,
+	initialSeconds: z.number().int().min(60),
+	incrementSeconds: z.number().int().min(0).max(120),
 	clock: matchClockDtoSchema.nullable(),
 	result: resultDtoSchema.nullable(),
 	createdAt: isoDateTimeSchema,
@@ -87,7 +92,9 @@ export type MatchDto = z.infer<typeof matchDtoSchema>;
 export type ListMatchesQuery = z.infer<typeof listMatchesQuerySchema>;
 export type ListMatchesResponse = z.infer<typeof listMatchesResponseSchema>;
 export type CreateMatchResponse = z.infer<typeof createMatchResponseSchema>;
-export type AssignMatchResultRequest = z.infer<typeof assignMatchResultRequestSchema>;
+export type AssignMatchResultRequest = z.infer<
+	typeof assignMatchResultRequestSchema
+>;
 export type AssignMatchResultResponse = z.infer<
 	typeof assignMatchResultResponseSchema
 >;

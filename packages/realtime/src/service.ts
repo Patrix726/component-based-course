@@ -3,9 +3,9 @@ import type { Notification, NotificationPayload } from "./types";
 
 export function createRealtime({
 	url,
-	key,
+	key: _key,
 }: { url?: string; key?: string } = {}) {
-	const client: any = initConvexClient(url, key);
+	const client: any = initConvexClient(url);
 
 	return {
 		async send(userId: string, payload: NotificationPayload) {

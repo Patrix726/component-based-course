@@ -8,3 +8,198 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum MembershipRole {
+  ADMIN
+  MEMBER
+}
+
+enum TournamentFormat {
+  SWISS
+  ROUND_ROBIN
+  ELIMINATION
+}
+
+enum RoundStatus {
+  SCHEDULED
+  ONGOING
+  COMPLETED
+}
+
+enum MatchStatus {
+  PENDING
+  IN_PROGRESS
+  RESULT_SUBMITTED
+  LOCKED
+}
+
+enum PieceColor {
+  WHITE
+  BLACK
+}
+
+enum MatchResultOutcome {
+  WHITE_WIN
+  BLACK_WIN
+  DRAW
+}
+
+model Club {
+  id          String       @id
+  name        String
+  memberships Membership[]
+  tournaments Tournament[]
+  players     Player[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("club")
+}
+
+model Membership {
+  id        String         @id
+  clubId    String
+  userId    String
+  role      MembershipRole
+  club      Club           @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@unique([clubId, userId])
+  @@index([userId])
+  @@map("membership")
+}
+
+model Tournament {
+  id              String           @id
+  clubId          String
+  name            String
+  format          TournamentFormat
+  roundsCount     Int
+  initialSeconds  Int
+  incrementSeconds Int
+  startsAt        DateTime?
+  createdByUserId String
+  club            Club             @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  createdByUser   User             @relation("TournamentCreatedByUser", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  rounds          Round[]
+  standings       Standing[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([clubId])
+  @@index([createdByUserId])
+  @@map("tournament")
+}
+
+model Round {
+  id           String      @id
+  tournamentId String
+  roundNumber  Int
+  status       RoundStatus
+  startsAt     DateTime?
+  tournament   Tournament  @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  matches      Match[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@unique([tournamentId, roundNumber])
+  @@index([tournamentId])
+  @@map("round")
+}
+
+model Player {
+  id          String     @id
+  clubId      String
+  userId      String?
+  displayName String
+  rating      Int?
+  club        Club       @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  user        User?      @relation("PlayerUser", fields: [userId], references: [id], onDelete: SetNull)
+  whiteMatches Match[]   @relation("MatchWhitePlayer")
+  blackMatches Match[]   @relation("MatchBlackPlayer")
+  standings   Standing[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([clubId])
+  @@index([userId])
+  @@map("player")
+}
+
+model Match {
+  id            String      @id
+  roundId       String
+  boardNumber   Int
+  whitePlayerId String
+  blackPlayerId String
+  status        MatchStatus
+  initialSeconds Int
+  incrementSeconds Int
+  round          Round       @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  whitePlayer    Player      @relation("MatchWhitePlayer", fields: [whitePlayerId], references: [id], onDelete: Restrict)
+  blackPlayer    Player      @relation("MatchBlackPlayer", fields: [blackPlayerId], references: [id], onDelete: Restrict)
+  clock          MatchClock?
+  result         Result?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@unique([roundId, boardNumber])
+  @@index([roundId])
+  @@index([whitePlayerId])
+  @@index([blackPlayerId])
+  @@map("match")
+}
+
+model MatchClock {
+  id               String      @id
+  matchId          String      @unique
+  whiteRemainingMs Int
+  blackRemainingMs Int
+  activeColor      PieceColor?
+  isRunning        Boolean
+  lastSyncedAt     DateTime
+  match            Match       @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@map("match_clock")
+}
+
+model Result {
+  id               String             @id
+  matchId          String             @unique
+  outcome          MatchResultOutcome
+  reason           String?
+  assignedByUserId String
+  assignedByUser   User               @relation("ResultAssignedByUser", fields: [assignedByUserId], references: [id], onDelete: Restrict)
+  match            Match              @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  assignedAt       DateTime
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@index([assignedByUserId])
+  @@map("result")
+}
+
+model Standing {
+  id           String     @id
+  tournamentId String
+  playerId     String
+  points       Float
+  gamesPlayed  Int
+  wins         Int
+  draws        Int
+  losses       Int
+  tieBreak     Float?
+  rank         Int
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  player       Player     @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([tournamentId, playerId])
+  @@index([tournamentId, rank])
+  @@map("standing")
+}

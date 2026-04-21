@@ -1,17 +1,25 @@
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../prisma/generated/client";
-import { createUserRepository } from "./repositories/user";
+import { createPrismaClient } from "./prisma";
+import { createRepositories } from "./repositories";
 
 export const createDb = ({
 	connectionString,
 }: {
 	connectionString: string;
 }) => {
-	const adapter = new PrismaPg({ connectionString });
-	const prisma = new PrismaClient({ adapter });
+	const prisma = createPrismaClient(connectionString);
+	const repositories = createRepositories(prisma);
 
 	return {
-		prisma,
-		repositories: { user: createUserRepository(prisma) },
+		repositories,
+		authAdapter: {
+			type: "prisma",
+			client: prisma,
+			options: { provider: "postgresql" },
+		},
+		disconnect: () => prisma.$disconnect(),
 	};
 };
+
+export type DbInstance = ReturnType<typeof createDb>;
+export type { DbClient } from "./prisma";
+export type { Repositories } from "./repositories";

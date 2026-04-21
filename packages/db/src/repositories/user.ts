@@ -1,22 +1,20 @@
-import type { PrismaClient } from "../../prisma/generated/client";
-
-export type UserCreateInput = Record<string, unknown>;
+import type { Prisma, PrismaClient } from "../../prisma/generated/client";
 
 export function createUserRepository(prisma: PrismaClient) {
 	return {
-		findById: async (id: string) => prisma.user.findUnique({ where: { id } }),
+		findById: (id: string) => prisma.user.findUnique({ where: { id } }),
 
-		findByEmail: async (email: string) =>
+		findByEmail: (email: string) =>
 			prisma.user.findUnique({ where: { email } }),
 
-		findMany: async (args?: any) => prisma.user.findMany(args),
+		findMany: (args?: Prisma.UserFindManyArgs) =>
+			prisma.user.findMany(args),
 
-		create: async (data: UserCreateInput) =>
-			prisma.user.create({ data: data as any }),
+		create: (data: Prisma.UserCreateInput) => prisma.user.create({ data }),
 
-		update: async (id: string, data: any) =>
+		update: (id: string, data: Prisma.UserUpdateInput) =>
 			prisma.user.update({ where: { id }, data }),
 
-		delete: async (id: string) => prisma.user.delete({ where: { id } }),
+		delete: (id: string) => prisma.user.delete({ where: { id } }),
 	};
 }

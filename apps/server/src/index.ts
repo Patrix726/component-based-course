@@ -7,13 +7,9 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import realtimeRouter from "./realtime-routes";
 
-const { prisma } = createDb({ connectionString: env.DATABASE_URL });
+const db = createDb({ connectionString: env.DATABASE_URL });
 const auth = createAuth({
-	adapterOpts: {
-		type: "prisma",
-		client: prisma,
-		options: { provider: "postgresql" },
-	},
+	adapterOpts: db.authAdapter,
 	config: {
 		BETTER_AUTH_SECRET: env.BETTER_AUTH_SECRET,
 		BETTER_AUTH_URL: env.BETTER_AUTH_URL,
