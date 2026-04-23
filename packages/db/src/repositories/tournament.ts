@@ -10,6 +10,8 @@ export function createTournamentRepository(prisma: PrismaClient) {
 		findMany: (args?: Prisma.TournamentFindManyArgs) =>
 			prisma.tournament.findMany(args),
 
+		count: (args?: Prisma.TournamentCountArgs) => prisma.tournament.count(args),
+
 		create: (data: Prisma.TournamentCreateInput) =>
 			prisma.tournament.create({ data }),
 

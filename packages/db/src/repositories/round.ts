@@ -13,6 +13,8 @@ export function createRoundRepository(prisma: PrismaClient) {
 
 		findMany: (args?: Prisma.RoundFindManyArgs) => prisma.round.findMany(args),
 
+		count: (args?: Prisma.RoundCountArgs) => prisma.round.count(args),
+
 		create: (data: Prisma.RoundCreateInput) => prisma.round.create({ data }),
 
 		update: (id: string, data: Prisma.RoundUpdateInput) =>

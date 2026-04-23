@@ -63,6 +63,9 @@ importers:
       '@component-based-software/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@component-based-software/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@component-based-software/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -72,9 +75,18 @@ importers:
       '@component-based-software/realtime':
         specifier: workspace:*
         version: link:../../packages/realtime
+      '@component-based-software/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@component-based-software/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@hono/node-server':
         specifier: ^1.14.4
         version: 1.19.11(hono@4.12.8)
+      '@hono/zod-validator':
+        specifier: ^0.7.6
+        version: 0.7.6(hono@4.12.8)(zod@4.3.6)
       better-auth:
         specifier: 'catalog:'
         version: 1.5.2(@prisma/client@7.5.0(prisma@7.5.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3))(@sveltejs/kit@2.55.0(@sveltejs/vite-plugin-svelte@6.2.4(svelte@5.53.13)(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)))(svelte@5.53.13)(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)))(drizzle-orm@0.45.1(@electric-sql/pglite@0.3.15)(@prisma/client@7.5.0(prisma@7.5.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3))(@types/pg@8.18.0)(kysely@0.28.12)(mysql2@3.15.3)(pg@8.20.0)(postgres@3.4.7)(prisma@7.5.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)))(mongodb@7.1.0)(mysql2@3.15.3)(pg@8.20.0)(prisma@7.5.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(svelte@5.53.13)
@@ -777,6 +789,12 @@ packages:
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
+
+  '@hono/zod-validator@0.7.6':
+    resolution: {integrity: sha512-Io1B6d011Gj1KknV4rXYz4le5+5EubcWEU/speUjuw9XMMIaP3n78yXLhjd2A3PXaXaUwEAluOiAyLqhBEJgsw==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.25.0 || ^4.0.0
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -3330,6 +3348,11 @@ snapshots:
   '@hono/node-server@1.19.9(hono@4.11.4)':
     dependencies:
       hono: 4.11.4
+
+  '@hono/zod-validator@0.7.6(hono@4.12.8)(zod@4.3.6)':
+    dependencies:
+      hono: 4.12.8
+      zod: 4.3.6
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:

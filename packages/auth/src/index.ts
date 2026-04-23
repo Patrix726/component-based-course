@@ -42,5 +42,9 @@ export const createAuth = ({
 		register: auth.api.signUpEmail,
 		getSession: auth.api.getSession,
 		resetPassword: auth.api.resetPassword,
+		types: {
+			session: auth.$Infer.Session.session || null,
+			user: auth.$Infer.Session.user || null,
+		},
 	};
 };

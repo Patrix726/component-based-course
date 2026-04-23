@@ -4,6 +4,12 @@ export function createMatchRepository(prisma: PrismaClient) {
 	return {
 		findById: (id: string) => prisma.match.findUnique({ where: { id } }),
 
+		findByIdWithRelations: (id: string) =>
+			prisma.match.findUnique({
+				where: { id },
+				include: { clock: true, result: true },
+			}),
+
 		findByRoundAndBoard: (roundId: string, boardNumber: number) =>
 			prisma.match.findUnique({
 				where: {
@@ -12,6 +18,8 @@ export function createMatchRepository(prisma: PrismaClient) {
 			}),
 
 		findMany: (args?: Prisma.MatchFindManyArgs) => prisma.match.findMany(args),
+
+		count: (args?: Prisma.MatchCountArgs) => prisma.match.count(args),
 
 		create: (data: Prisma.MatchCreateInput) => prisma.match.create({ data }),
 

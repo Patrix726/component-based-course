@@ -10,10 +10,14 @@
 		"start": "node dist/index.mjs"
 	},
 	"dependencies": {
+		"@component-based-software/core": "workspace:*",
 		"@component-based-software/realtime": "workspace:*",
 		"@component-based-software/auth": "workspace:*",
 		"@component-based-software/db": "workspace:*",
 		"@component-based-software/env": "workspace:*",
+		"@component-based-software/types": "workspace:*",
+		"@component-based-software/utils": "workspace:*",
+		"@hono/zod-validator": "^0.7.6",
 		"@hono/node-server": "^1.14.4",
 		"better-auth": "catalog:",
 		"dotenv": "catalog:",
