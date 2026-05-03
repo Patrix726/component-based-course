@@ -1,6 +1,6 @@
-import type { auth } from "./auth";
+import type { Session, User } from "./auth";
 
 export type AppVariables = {
-	user: typeof auth.types.user;
-	session: typeof auth.types.session;
+	user: User;
+	session: Session;
 };

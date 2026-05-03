@@ -1,11 +1,17 @@
 <script lang="ts">
+	import { authClient } from '$lib/auth-client';
 	import { Link } from "@component-based-software/ui"
+	import { ThemeToggle } from "@component-based-software/ui";
 	import UserMenu from './UserMenu.svelte';
-    const links = [
-        { to: "/", label: "Home" },
-        { to: "/dashboard", label: "Dashboard" },
-    ];
 
+	const sessionQuery = authClient.useSession();
+
+	const baseLinks = [
+		{ to: "/", label: "Home" },
+		{ to: "/dashboard", label: "Dashboard" },
+	];
+
+	$: links = $sessionQuery.data?.user ? [...baseLinks, { to: "/admin/tournaments", label: "Admin" }] : baseLinks;
 </script>
 
 <div>
@@ -18,7 +24,8 @@
 			{/each}
 		</nav>
 		<div class="flex items-center gap-2">
-            <UserMenu />
+			<ThemeToggle />
+			<UserMenu />
 		</div>
 	</div>
 	<hr class="border-neutral-800" />

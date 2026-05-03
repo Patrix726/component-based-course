@@ -10,3 +10,5 @@ export const auth = createAuth({
 		CORS_ORIGIN: env.CORS_ORIGIN,
 	},
 });
+
+export type { Session, User } from "@component-based-software/auth/types";
